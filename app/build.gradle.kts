@@ -68,7 +68,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)
+    // Required for Hilt dependency injection
     implementation(libs.coil.compose)
     implementation(libs.hilt.android)
+    // Required for instantiating hiltViewModel()
+    implementation(libs.hilt.navigation.compose)
+    // Required for compiling dependency injection with kotlin annotation processing
     kapt(libs.hilt.compiler)
 }

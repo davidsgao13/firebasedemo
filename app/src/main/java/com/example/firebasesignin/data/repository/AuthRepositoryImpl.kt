@@ -78,7 +78,7 @@ class AuthRepositoryImpl : AuthRepository {
                  */
                 val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
                     .setFilterByAuthorizedAccounts(false)
-                    .setServerClientId("YOUR_WEB_CLIENT_ID")
+                    .setServerClientId("339826612562-54sfjudbobi1d9v84hp26bhvlv4nnh8n.apps.googleusercontent.com")
                     .setNonce(hashedNonce)
                     .build()
 

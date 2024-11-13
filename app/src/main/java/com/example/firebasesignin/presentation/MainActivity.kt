@@ -30,23 +30,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.firebasesignin.R
 import com.example.firebasesignin.presentation.view_models.LoginViewModel
 import com.example.firebasesignin.ui.theme.FirebasesigninTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Implementing the Firebase SDK within an Android Studio is somewhat tricky because it is
  * both related to data since it talks to the backend server, and is also UI related. So where
  * should it go?
  */
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             FirebasesigninTheme {
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
                     LoginScreen()
                 }
             }
@@ -56,7 +61,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = LoginViewModel(),
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val isDarkTheme = isSystemInDarkTheme()
     val context = LocalContext.current as Activity
@@ -64,7 +69,9 @@ fun LoginScreen(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainerHigh)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
     ) {
         Surface(
             shape = CircleShape,

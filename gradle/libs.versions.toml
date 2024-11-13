@@ -15,7 +15,8 @@ composeBom = "2024.10.01"
 navigationCompose = "2.8.3"
 playServicesAuth = "21.2.0"
 googleid = "1.1.1"
-hilt = "2.51.1"
+hilt = "2.52"
+hiltNavigation = "1.2.0"
 google-services = "4.4.2"
 
 [libraries]
@@ -45,6 +46,7 @@ play-services-auth = { module = "com.google.android.gms:play-services-auth", ver
 googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
