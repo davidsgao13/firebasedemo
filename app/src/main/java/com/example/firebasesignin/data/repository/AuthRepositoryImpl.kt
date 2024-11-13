@@ -5,6 +5,7 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
+import com.example.firebasesignin.R
 import com.example.firebasesignin.domain.repository.AuthRepository
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -78,7 +79,7 @@ class AuthRepositoryImpl : AuthRepository {
                  */
                 val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
                     .setFilterByAuthorizedAccounts(false)
-                    .setServerClientId("339826612562-54sfjudbobi1d9v84hp26bhvlv4nnh8n.apps.googleusercontent.com")
+                    .setServerClientId(context.getString(R.string.default_web_client_id))
                     .setNonce(hashedNonce)
                     .build()
 
