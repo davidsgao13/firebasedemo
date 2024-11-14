@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -104,7 +103,11 @@ class MainActivity : ComponentActivity() {
                                 }
 
                                 else -> {
-                                    // Do not display anything for LoggedOut or Loading states
+                                    LaunchedEffect(Unit) {
+                                        navController.navigate("login") {
+                                            popUpTo("signedIn") { inclusive = true }
+                                        }
+                                    }
                                 }
                             }
                         }
