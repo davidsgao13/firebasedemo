@@ -11,9 +11,12 @@ import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.security.MessageDigest
@@ -28,6 +31,17 @@ import java.util.UUID
  * authentication data without knowing or caring about the underlying implementation details.
  */
 class AuthRepositoryImpl : AuthRepository {
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val _currentUser = MutableStateFlow(firebaseAuth.currentUser)
+    override val currentUser: StateFlow<FirebaseUser?> get() = _currentUser
+
+    private val authListener = FirebaseAuth.AuthStateListener { auth ->
+        _currentUser.value = auth.currentUser
+    }
+
+    init {
+        firebaseAuth.addAuthStateListener(authListener)
+    }
 
     /**
      * @suspend as a keyword denotes that this function will be used asynchronously. It emits a
@@ -40,7 +54,6 @@ class AuthRepositoryImpl : AuthRepository {
          * Retrieves the singleton FirebaseAuth instance, which is required for authentication calls
          */
 
-        val firebaseAuth = FirebaseAuth.getInstance()
 
         /**
          * @callbackFlow is a Kotlin coroutine builder that bridges callback-based API calls with
@@ -111,5 +124,14 @@ class AuthRepositoryImpl : AuthRepository {
             }
             awaitClose { }
         }
+    }
+
+    override fun logout() {
+        firebaseAuth.signOut()
+        _currentUser.value = null
+    }
+
+    override fun getSignedInUser(): FirebaseUser? {
+        return firebaseAuth.currentUser
     }
 }

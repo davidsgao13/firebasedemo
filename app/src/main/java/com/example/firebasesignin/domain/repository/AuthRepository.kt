@@ -2,7 +2,9 @@ package com.example.firebasesignin.domain.repository
 
 import android.content.Context
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * The AuthRepository interface abstracts authentication actions, such as signing in with Google.
@@ -15,4 +17,14 @@ import kotlinx.coroutines.flow.Flow
  */
 interface AuthRepository {
     suspend fun googleSignIn(context: Context): Flow<Result<AuthResult>>
+
+    /**
+     * No asynchronous work occurs in logout() because it is calling the method firebase.signOut(),
+     * which is a synchronous operation. Since no I/O or long-running tasks are involved, suspend
+     * isn’t necessary, as suspend is typically reserved for functions that need to execute
+     * asynchronously.
+     */
+    fun logout()
+    fun getSignedInUser(): FirebaseUser?
+    val currentUser: StateFlow<FirebaseUser?>
 }
